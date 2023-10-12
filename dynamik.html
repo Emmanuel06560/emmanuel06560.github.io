@@ -35,7 +35,21 @@
         const translateLink = document.getElementById('translate-link');
 
         // L'URL de traduction Google Translate
-        translateLink.href = `https://translate.google.com/translate?sl=auto&tl=fr&u=${window.location.href}`;
+        
+
+        const url = window.location.href;
+        const parsedURL = new URL(url);
+
+        // Composants de l'URL
+        const protocol = parsedURL.protocol; // "https:"
+        const host = parsedURL.host; // "www.monsite.com:8080"
+        const hostname = parsedURL.hostname; // "www.monsite.com"
+        const port = parsedURL.port; // "8080"
+        const pathname = parsedURL.pathname; // "/page.html"
+        const search = parsedURL.search; // "?param1=valeur1&param2=valeur2"
+        const hash = parsedURL.hash; // "#section"
+
+        translateLink.href = `https://${host}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=fr&_x_tr_hl=fr`;
 
         translateLink.addEventListener('click', () => {
             // Rediriger vers Google Translate pour la traduction
