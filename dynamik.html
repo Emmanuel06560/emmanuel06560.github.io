@@ -25,5 +25,22 @@
             titleContainer.textContent = title;
         }
     </script>
+
+    <div>
+        <a href="#" id="translate-link">Traduire cette page</a>
+    </div>
+
+    <script>
+        // Lien de traduction
+        const translateLink = document.getElementById('translate-link');
+
+        // L'URL de traduction Google Translate
+        translateLink.href = `https://translate.google.com/translate?sl=auto&tl=fr&u=${window.location.href}`;
+
+        translateLink.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLink.href;
+        });
+    </script>
 </body>
 </html>
