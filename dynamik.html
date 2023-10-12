@@ -27,7 +27,7 @@
     </script>
 
     <div>
-        <a href="#" id="translate-link">Traduire cette page</a>
+        <a href="#" id="translate-link">Traduire en Anglais</a>
     </div>
 
     <script>
@@ -49,7 +49,7 @@
         const search = parsedURL.search; // "?param1=valeur1&param2=valeur2"
         const hash = parsedURL.hash; // "#section"
 
-        translateLink.href = `https://${host}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=fr&_x_tr_hl=fr`;
+        translateLink.href = `https://${host}.translate.goog/${pathname.replace('.', '-')}${search}&_x_tr_sl=auto&_x_tr_tl=fr&_x_tr_hl=fr`;
 
         translateLink.addEventListener('click', () => {
             // Rediriger vers Google Translate pour la traduction
