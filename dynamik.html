@@ -27,12 +27,16 @@
     </script>
 
     <div>
-        <a href="#" id="translate-link">Traduire en Anglais</a>
+        <a href="#" id="translate-en-link">Traduire en Anglais</a>
+        <a href="#" id="translate-es-link">Traduire en Espagnol</a>
+        <a href="#" id="translate-it-link">Traduire en Italien</a>
+        <a href="#" id="translate-de-link">Traduire en Allemand</a>
+
     </div>
 
     <script>
-        // Lien de traduction
-        const translateLink = document.getElementById('translate-link');
+       
+        
 
         // L'URL de traduction Google Translate
         
@@ -49,12 +53,52 @@
         const search = parsedURL.search; // "?param1=valeur1&param2=valeur2"
         const hash = parsedURL.hash; // "#section"
 
-        translateLink.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=fr&_x_tr_hl=fr`;
-
-        translateLink.addEventListener('click', () => {
+        const translateLinkEn = document.getElementById('translate-en-link');
+        translateLinkEn.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=en`;
+        translateLinkEn.addEventListener('click', () => {
             // Rediriger vers Google Translate pour la traduction
-            window.location.href = translateLink.href;
+            window.location.href = translateLinkEn.href;
         });
+
+        const translateLinkEs = document.getElementById('translate-es-link');
+        translateLinkEs.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=es`;
+        translateLinkEs.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLinkEs.href;
+        });
+
+        const translateLinkIt = document.getElementById('translate-it-link');
+        translateLinkIt.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=it`;
+        translateLinkIt.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLinkIt.href;
+        });
+
+        const translateLinkDe = document.getElementById('translate-de-link');
+        translateLinkDe.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=de`;
+        translateLinkDe.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLinkDe.href;
+        });
+
+        
+        const langue = params.get('lang');
+        switch (expr) {
+        case 'en':
+            window.location.href = translateLinkEn.href;
+            break;
+        case 'es':
+            window.location.href = translateLinkEs.href;
+            break;
+        case 'it':
+            window.location.href = translateLinkIt.href;
+            break;
+        case 'de':
+            window.location.href = translateLinkDe.href;
+            break;
+        default:
+            console.log('No lang');
+        }
     </script>
 </body>
 </html>
