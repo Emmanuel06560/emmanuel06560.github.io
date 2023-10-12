@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Affichage du texte de l'URL</title>
+</head>
+<body>
+    <h1><div id="title-container"></div></h1>
+    <div id="text-container"></div>
+
+    <script>
+        // Récupérer le paramètre 'text' de l'URL
+        const params = new URLSearchParams(window.location.search);
+        const text = params.get('text');
+
+        // Afficher le texte dans la page
+        if (text) {
+            const textContainer = document.getElementById('text-container');
+            textContainer.textContent = text;
+        }
+        const title = params.get('title');
+
+        // Afficher le texte dans la page
+        if (title) {
+            const textContainer = document.getElementById('title-container');
+            titleContainer.textContent = title;
+        }
+    </script>
+</body>
+</html>
