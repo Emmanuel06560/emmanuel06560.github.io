@@ -27,13 +27,14 @@
     </script>
 
     <div>
-        <a href="#" id="translate-en-link">Traduire en Anglais</a>
-        <a href="#" id="translate-es-link">Traduire en Espagnol</a>
-        <a href="#" id="translate-it-link">Traduire en Italien</a>
-        <a href="#" id="translate-de-link">Traduire en Allemand</a>
-        <a href="#" id="translate-fr-link">Traduire en Francais</a>
-        <a href="#" id="translate-cn-link">Traduire en Chinois</a>
-        <a href="#" id="translate-ar-link">Traduire en Arabe</a>
+        <a href="#" id="translate-en-link"><img src="en.png" width="20" ></img></a>
+        <a href="#" id="translate-es-link"><img src="es.png" width="20" ></img></a>
+        <a href="#" id="translate-it-link"><img src="it.png" width="20" ></img></a>
+        <a href="#" id="translate-de-link"><img src="de.png" width="20" ></img></a>
+        <a href="#" id="translate-fr-link"><img src="fr.png" width="20" ></img></a>
+        <a href="#" id="translate-cn-link"><img src="cn.png" width="20" ></img></a>
+        <a href="#" id="translate-ru-link"><img src="ru.png" width="20" ></img></a>
+        <a href="#" id="translate-ja-link"><img src="ja.png" width="20" ></img></a>
 
     </div>
 
@@ -89,17 +90,23 @@
             // Rediriger vers Google Translate pour la traduction
             window.location.href = translateLinkFr.href;
         });
-        const translateLinkAr = document.getElementById('translate-ar-link');
-        translateLinkAr.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=ar`;
-        translateLinkAr.addEventListener('click', () => {
-            // Rediriger vers Google Translate pour la traduction
-            window.location.href = translateLinkAr.href;
-        });
         const translateLinkCn = document.getElementById('translate-cn-link');
         translateLinkCn.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=zh-CN`;
         translateLinkCn.addEventListener('click', () => {
             // Rediriger vers Google Translate pour la traduction
             window.location.href = translateLinkCn.href;
+        });
+        const translateLinkRu = document.getElementById('translate-ru-link');
+        translateLinkRu.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=ru`;
+        translateLinkRu.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLinkRu.href;
+        });
+        const translateLinkJa = document.getElementById('translate-ja-link');
+        translateLinkJa.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=ja`;
+        translateLinkJa.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLinkJa.href;
         });
 
         
@@ -119,6 +126,15 @@
             break;
         case 'fr':
             window.location.href = translateLinkFr.href;
+            break;
+        case 'cn':
+            window.location.href = translateLinkCn.href;
+            break;
+        case 'ru':
+            window.location.href = translateLinkCn.href;
+            break;
+        case 'ja':
+            window.location.href = translateLinkCn.href;
             break;
         default:
             console.log('No lang');
