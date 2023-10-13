@@ -32,6 +32,8 @@
         <a href="#" id="translate-it-link">Traduire en Italien</a>
         <a href="#" id="translate-de-link">Traduire en Allemand</a>
         <a href="#" id="translate-fr-link">Traduire en Francais</a>
+        <a href="#" id="translate-cn-link">Traduire en Chinois</a>
+        <a href="#" id="translate-ar-link">Traduire en Arabe</a>
 
     </div>
 
@@ -86,6 +88,18 @@
         translateLinkFr.addEventListener('click', () => {
             // Rediriger vers Google Translate pour la traduction
             window.location.href = translateLinkFr.href;
+        });
+        const translateLinkAr = document.getElementById('translate-ar-link');
+        translateLinkAr.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=ar`;
+        translateLinkAr.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLinkAr.href;
+        });
+        const translateLinkCn = document.getElementById('translate-cn-link');
+        translateLinkCn.href = `https://${host.replaceAll('.', '-')}.translate.goog/${pathname}${search}&_x_tr_sl=auto&_x_tr_tl=zh-CN`;
+        translateLinkCn.addEventListener('click', () => {
+            // Rediriger vers Google Translate pour la traduction
+            window.location.href = translateLinkCn.href;
         });
 
         
