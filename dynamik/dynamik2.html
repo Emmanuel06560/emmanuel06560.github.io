@@ -64,7 +64,9 @@
 		  fetch(url)
 			.then(response => response.json())
 			.then(data => {
-			  const traduction = data[0][0][0];
+			  let traduction = ""
+			  for (const r of data[0])
+			  	traduction = traduction+r[0]
 			  document.getElementById("translated-title-container").textContent = traduction;
 			})
 			.catch(error => console.error(error));
@@ -76,7 +78,9 @@
 		  fetch(url2)
 			.then(response => response.json())
 			.then(data => {
-			  const traduction = data[0][0][0];
+			  let traduction = ""
+			  for (const r of data[0])
+			  	traduction = traduction+r[0]
 			  document.getElementById("translated-text-container").textContent = traduction;
 			})
 			.catch(error => console.error(error));
