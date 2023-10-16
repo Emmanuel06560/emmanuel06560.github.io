@@ -146,6 +146,7 @@
 				);
 				document.getElementById("translated-title-container").textContent = (await translator2((await translator1(title, {}))[0].translation_text, {}))[0].translation_text
 				document.getElementById("translated-text-container").textContent = (await translator2((await translator1(text, {}))[0].translation_text, {}))[0].translation_text
+				document.getElementById("translated-personal-container").textContent = document.getElementById("personal-container").textContent;
 			}
 		}
 		for (const property of ["en", "es", "it", "de", "fr", "ru"]) {
