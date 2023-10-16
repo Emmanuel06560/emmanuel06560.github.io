@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Affichage du texte de l'URL</title>
+</head>
+<body>
+    <h1><div id="title-container" style="color:#00f;font-family:Montserrat"></div></h1>
+	<br/>
+    <div id="text-container" style="font-size:21px;font-family:Barlow">bonjour . je suis</div>
+	<div id="personal-container" style="font-size:21px;font-family:Barlow"></div>
+	<br/>
+    <div id="info" style="font-size:14px;font-family:Barlow;background-color:#F5F5F5">Docaposte vous propose des traductions automatiques basées sur Google Traduction, le message d'origine faisant foi.
+		Aucune donnée personnelle n'est envoyée à google
+	<br/>
+    <div>
+        <img id="translate-en" src="en.png" width="20" ></img>
+        <img id="translate-es" src="es.png" width="20" ></img>
+        <img id="translate-it" src="it.png" width="20" ></img>
+        <img id="translate-de" src="de.png" width="20" ></img>
+        <img id="translate-fr" src="fr.png" width="20" ></img>
+        <img id="translate-zh-CN" src="cn.png" width="20" ></img>
+        <img id="translate-ru" src="ru.png" width="20" ></img>
+        <img id="translate-ja" src="ja.png" width="20" ></img>
+	</div>
+	</div>
+
+	<br/>
+
+	<div id="info" style="font-size:14px;font-family:Barlow;background-color:#F5F5F5">Docaposte vous propose des traductions automatiques et sécurisées basées sur une IA dans votre navigateur, le message d'origine faisant foi.
+		<br/>
+		<div>
+			<img id="browser-translate-en" src="en.png" width="20" ></img>
+			<img id="browser-translate-es" src="es.png" width="20" ></img>
+			<img id="browser-translate-it" src="it.png" width="20" ></img>
+			<img id="browser-translate-de" src="de.png" width="20" ></img>
+			<img id="browser-translate-fr" src="fr.png" width="20" ></img>
+			<img id="browser-translate-ru" src="ru.png" width="20" ></img>
+		</div>
+	</div>
+
+	
+	<br/>
+	<h1><div id="translated-title-container" style="color:#00f;font-family:Montserrat"></div></h1>
+	<br/>
+    <div id="translated-text-container" style="font-size:21px;font-family:Barlow"></div>
+	<div id="translated-personal-container" style="font-size:21px;font-family:Barlow"></div>
+
+
+    <script>
+        // Récupérer le paramètre 'text' de l'URL
+        const params = new URLSearchParams(window.location.search);
+		const title = params.get('title');
+        const text = params.get('text');
+		const personal = params.get('personal');
+		const lang = params.get('lang');
+
+		if (title) {
+            const titleContainer = document.getElementById('title-container');
+            titleContainer.textContent = title;
+        }
+
+        if (text) {
+            const textContainer = document.getElementById('text-container');
+            textContainer.textContent = text;
+        }
+
+		if (personal) {
+            const personalContainer = document.getElementById('personal-container');
+            personalContainer.textContent = personal;
+        }
+
+
+    </script>
+
+	<script>
+
+		function translate(dest_lang) {
+		  
+		  const txt = document.getElementById("title-container").textContent;
+		  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${dest_lang}&dt=t&q=${encodeURIComponent(txt)}`;
+		  
+		  fetch(url)
+			.then(response => response.json())
+			.then(data => {
+			  let traduction = ""
+			  for (const r of data[0])
+			  	traduction = traduction+r[0]
+			  document.getElementById("translated-title-container").textContent = traduction;
+			})
+			.catch(error => console.error(error));
+		
+		
+		  const txt2 = document.getElementById("text-container").textContent;
+		  const url2 = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${dest_lang}&dt=t&q=${encodeURIComponent(txt2)}`;
+		  
+		  fetch(url2)
+			.then(response => response.json())
+			.then(data => {
+			  let traduction = ""
+			  for (const r of data[0])
+			  	traduction = traduction+r[0]
+			  document.getElementById("translated-text-container").textContent = traduction;
+			})
+			.catch(error => console.error(error));
+
+			document.getElementById("translated-personal-container").textContent = document.getElementById("personal-container").textContent;
+	
+		}
+
+		
+		for (const property of ["en", "es", "it", "de", "fr", "zh-CN", "ru", "ja"]) {
+		  document.getElementById(`translate-${property}`).addEventListener("click", () => translate(property));
+		}
+		
+		if (lang){
+			translate(lang)
+		}
+	</script>
+	<script  type="module" defer>
+
+
+		import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.2';
+
+		async function browser_translate(from_lang, to_lang) {
+
+			const title = document.getElementById("title-container").textContent;
+			const text = document.getElementById("text-container").textContent;
+
+			if (to_lang != "it"){
+				const translator = await pipeline(
+					'translation', // task
+					`Xenova/opus-mt-${from_lang}-${to_lang}` // model
+				);
+				document.getElementById("translated-title-container").textContent = (await translator(title, {}))[0].translation_text
+				document.getElementById("translated-text-container").textContent = (await translator(text, {}))[0].translation_text
+			}else {
+				const translator1 = await pipeline(
+					'translation', // task
+					`Xenova/opus-mt-${from_lang}-en` // model
+				);
+				const translator2 = await pipeline(
+					'translation', // task
+					`Xenova/opus-mt-en-${to_lang}` // model
+				);
+				document.getElementById("translated-title-container").textContent = (await translator2((await translator1(title, {}))[0].translation_text, {}))[0].translation_text
+				document.getElementById("translated-text-container").textContent = (await translator2((await translator1(text, {}))[0].translation_text, {}))[0].translation_text
+			}
+		}
+		for (const property of ["en", "es", "it", "de", "fr", "ru"]) {
+		  document.getElementById(`browser-translate-${property}`).addEventListener("click", () => browser_translate("fr", property));
+		}
+
+	</script>
+
+</body>
+</html>
