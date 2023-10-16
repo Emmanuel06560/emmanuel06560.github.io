@@ -126,6 +126,8 @@
 			const title = document.getElementById("title-container").textContent;
 			const text = document.getElementById("text-container").textContent;
 
+			document.getElementById("translated-text-container").textContent = "IA @Work... please wait..."
+
 			if (to_lang != "it"){
 				const translator = await pipeline(
 					'translation', // task
