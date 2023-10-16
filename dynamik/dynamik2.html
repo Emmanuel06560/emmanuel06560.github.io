@@ -8,27 +8,34 @@
 	<br/>
     <div id="text-container" style="font-size:21px;font-family:Barlow"></div>
 	<br/>
+	<div id="personal-container" style="font-size:21px;font-family:Barlow"></div>
 	<br/>
     <div id="info" style="font-size:14px;font-family:Barlow">Docaposte vous propose des traductions automatiques en guise d'aide, le message d'origine faisant foi.</div>
 	<br/>
     <script>
         // Récupérer le paramètre 'text' de l'URL
         const params = new URLSearchParams(window.location.search);
+		const title = params.get('title');
         const text = params.get('text');
+		const personal = params.get('personal');
 		const lang = params.get('lang');
 
-        // Afficher le texte dans la page
+		if (title) {
+            const titleContainer = document.getElementById('title-container');
+            titleContainer.textContent = title;
+        }
+
         if (text) {
             const textContainer = document.getElementById('text-container');
             textContainer.textContent = text;
         }
-        const title = params.get('title');
 
-        // Afficher le texte dans la page
-        if (title) {
-            const titleContainer = document.getElementById('title-container');
-            titleContainer.textContent = title;
+		if (personal) {
+            const textContainer = document.getElementById('personal-container');
+            personalContainer.textContent = personal;
         }
+
+
     </script>
 
     <div>
