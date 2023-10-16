@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Affichage du texte de l'URL</title>
+</head>
+<body>
+    <h1><div id="title-container" style="color:#00f;font-family:Montserrat"></div></h1>
+	<br/>
+    <div id="text-container" style="font-size:21px;font-family:Barlow"></div>
+	<br/>
+	<br/>
+    <div id="info" style="font-size:14px;font-family:Barlow">Docaposte vous propose des traductions automatiques en guise d'aide, le message d'origine faisant foi.</div>
+	<br/>
+    <script>
+        // Récupérer le paramètre 'text' de l'URL
+        const params = new URLSearchParams(window.location.search);
+        const text = params.get('text');
+		const lang = params.get('lang');
+
+        // Afficher le texte dans la page
+        if (text) {
+            const textContainer = document.getElementById('text-container');
+            textContainer.textContent = text;
+        }
+        const title = params.get('title');
+
+        // Afficher le texte dans la page
+        if (title) {
+            const titleContainer = document.getElementById('title-container');
+            titleContainer.textContent = title;
+        }
+    </script>
+
+    <div>
+        <img id="translate-en" src="en.png" width="20" ></img>
+        <img id="translate-es" src="es.png" width="20" ></img>
+        <img id="translate-it" src="it.png" width="20" ></img>
+        <img id="translate-de" src="de.png" width="20" ></img>
+        <img id="translate-fr" src="fr.png" width="20" ></img>
+        <img id="translate-zh-CN" src="cn.png" width="20" ></img>
+        <img id="translate-ru" src="ru.png" width="20" ></img>
+        <img id="translate-ja" src="ja.png" width="20" ></img>
+	</div>
+	
+	<br/>
+	<h1><div id="translated-title-container" style="color:#00f;font-family:Montserrat"></div></h1>
+	<br/>
+    <div id="translated-text-container" style="font-size:21px;font-family:Barlow"></div>
+	<script>
+
+		function translate(dest_lang) {
+		  
+		  const txt = document.getElementById("title-container").textContent;
+		  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${dest_lang}&dt=t&q=${encodeURIComponent(txt)}`;
+		  
+		  fetch(url)
+			.then(response => response.json())
+			.then(data => {
+			  const traduction = data[0][0][0];
+			  document.getElementById("translated-title-container").textContent = traduction;
+			})
+			.catch(error => console.error(error));
+		
+		
+		  const txt2 = document.getElementById("text-container").textContent;
+		  const url2 = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${dest_lang}&dt=t&q=${encodeURIComponent(txt2)}`;
+		  
+		  fetch(url2)
+			.then(response => response.json())
+			.then(data => {
+			  const traduction = data[0][0][0];
+			  document.getElementById("translated-text-container").textContent = traduction;
+			})
+			.catch(error => console.error(error));
+	
+			}
+
+		for (const property of ["en", "es", "it", "de", "fr", "zh-CN", "ru", "ja"]) {
+		  document.getElementById(`translate-${property}`).addEventListener("click", () => translate(property));
+		}
+		
+		if (lang){
+			translate(lang)
+		}
+	</script>
+
+</body>
+</html>
