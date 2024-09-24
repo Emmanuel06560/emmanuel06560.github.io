@@ -67,18 +67,6 @@
                     const li = document.createElement('li');
                     let capabilitiesHTML = `
                         <strong>camera Label:</strong> ${camera.label || 'No Label'}<br>
-                        <strong>camera Device ID:</strong> ${camera.deviceId}<br>
-                        <strong>camera Group ID:</strong> ${camera.groupId}<br>
-                        <strong>camera contentHint:</strong> ${tempVideoTrack.contentHint}<br>
-                        <strong>VideoTrackCapabilities enabled:</strong> ${tempVideoTrack.enabled}<br>
-                        <strong>VideoTrackCapabilities id:</strong> ${tempVideoTrack.id}<br>
-                        <strong>VideoTrackCapabilities label:</strong> ${tempVideoTrack.label}<br>
-                        <strong>VideoTrackCapabilities muted:</strong> ${tempVideoTrack.muted}<br>
-                        <strong>VideoTrackCapabilities oncapturehandlechange:</strong> ${tempVideoTrack.oncapturehandlechange}<br>
-                        <strong>VideoTrackCapabilities onended:</strong> ${tempVideoTrack.onended}<br>
-                        <strong>VideoTrackCapabilities onmute:</strong> ${tempVideoTrack.onmute}<br>
-                        <strong>VideoTrackCapabilities onunmute:</strong> ${tempVideoTrack.onunmute}<br>
-                        <strong>VideoTrackCapabilities readyState:</strong> ${tempVideoTrack.readyState}<br>
                         <strong>VideoTrackSettings aspectRatio:</strong> ${tempSettings.aspectRatio}<br>
                         <strong>VideoTrackSettings deviceId:</strong> ${tempSettings.deviceId}<br>
                         <strong>VideoTrackSettings frameRate:</strong> ${tempSettings.frameRate}<br>
@@ -88,7 +76,7 @@
                         <strong>VideoTrackSettings resizeMode:</strong> ${tempSettings.resizeMode}<br>                                                                                                                                                                   
                         
                         
-                        <strong>Capabilities:</strong><br>
+
                         <ul>
                     `;
 
