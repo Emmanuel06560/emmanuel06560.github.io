@@ -149,7 +149,7 @@
             link.download = 'captured_image.png';
             link.click();
         }
-
+getCameraInfo();
         // Attach the click event to the capture button after the page loads
         document.getElementById('captureImageBtn').addEventListener('click', captureImage);
 
@@ -183,7 +183,10 @@
                 document.getElementById('codecList').textContent = 'Error accessing media devices: ' + err.message;
             }
         });
+        
+        
+        
     </script>
-    </script>
+
 </body>
 </html>
