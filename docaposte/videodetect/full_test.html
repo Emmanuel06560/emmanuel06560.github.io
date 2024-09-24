@@ -19,6 +19,10 @@
     <button id="getCodecs">Get Codecs</button>
     <pre id="codecList"></pre>
 
+    <!-- New button for capturing the image -->
+    <button id="captureImageBtn" style="display:none;">Capture Image</button>
+    <canvas id="canvas" style="display:none;"></canvas>
+
     <script>
         document.getElementById('getCamerasBtn').addEventListener('click', getCameraInfo);
 
@@ -117,8 +121,80 @@
                 alert('Error accessing camera devices. Check console for details.');
             }
         }
-getCameraInfo()
+
+        async function showCamera(deviceId) {
+            try {
+                const constraints = { video: { deviceId: { exact: deviceId }, width: 1920, height: 1080 }, frameRate: { ideal: 3, max: 3 } };
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                const videoElement = document.getElementById('cameraVideo');
+                videoElement.srcObject = stream;
+
+                // Show the capture button when a camera is displayed
+                document.getElementById('captureImageBtn').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error showing camera video:', error);
+                alert('Error showing camera video. Check console for details.');
+            }
+        }
+
+        // Function to capture the image when the button is clicked
+        function captureImage() {
+            const videoElement = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+
+            // Set the canvas size to match the video element
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+
+            // Draw the current frame from the video onto the canvas
+            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas to a data URL (base64 encoded image)
+            const dataURL = canvas.toDataURL('image/png');
+
+            // Trigger the download of the image
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'captured_image.png';
+            link.click();
+        }
+
+        // Attach the click event to the capture button after the page loads
+        document.getElementById('captureImageBtn').addEventListener('click', captureImage);
+
+                document.getElementById('getCodecs').addEventListener('click', async () => {
+            try {
+                // Get a media stream
+                const videoElement = document.getElementById('cameraVideo');
+                const stream = videoElement.srcObject;
+
+                // Create a peer connection
+                const pc = new RTCPeerConnection();
+
+                // Add tracks to the peer connection
+                stream.getTracks().forEach(track => pc.addTrack(track, stream));
+
+                // Get audio and video codecs
+                const audioCapabilities = RTCRtpSender.getCapabilities('audio');
+                const videoCapabilities = RTCRtpSender.getCapabilities('video');
+
+                // Display the codecs
+                document.getElementById('codecList').textContent = JSON.stringify({
+                    audio: audioCapabilities.codecs,
+                    video: videoCapabilities.codecs
+                }, null, 2);
+
+                // Clean up
+                stream.getTracks().forEach(track => track.stop());
+                pc.close();
+            } catch (err) {
+                console.error('Error accessing media devices.', err);
+                document.getElementById('codecList').textContent = 'Error accessing media devices: ' + err.message;
+            }
+        });
     </script>
-    
+    </script>
 </body>
 </html>
