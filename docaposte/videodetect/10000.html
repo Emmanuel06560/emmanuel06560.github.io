@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Information</title>
+</head>
+<body>
+    <h1>Camera Information</h1>
+    <button id="getCamerasBtn">Get Camera Information</button><br />
+    cameraList :
+    <ul id="cameraList"></ul>
+
+    <!-- Video element to show the camera feed -->
+    <video id="cameraVideo" autoplay></video>
+    <br />
+
+	<!-- 
+    <h1>Available RTC Codecs</h1>
+    <button id="getCodecs">Get Codecs</button>
+    <pre id="codecList"></pre>
+
+    
+    <button id="captureImageBtn" style="display:none;">Capture Image</button>
+    <canvas id="canvas" style="display:none;"></canvas>
+	-->
+    <script>
+        document.getElementById('getCamerasBtn').addEventListener('click', getCameraInfo);
+
+        async function getCameraInfo() {
+            try {
+                // Request permission to access media devices
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const cameraList = document.getElementById('cameraList');
+                cameraList.innerHTML = ''; // Clear any previous entries
+
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                
+                
+                
+
+                
+                const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+                console.log('Supported constraints:', supportedConstraints);
+
+
+
+
+
+
+
+                for (const camera of videoDevices) {
+//                    const constraints = { video: { deviceId: camera.deviceId, width: 5000, height: 1000 } };
+                    const constraints = { video: { deviceId: camera.deviceId , width: 10000 } };
+                    const tempStream = await navigator.mediaDevices.getUserMedia(constraints);
+                    const tempVideoTrack = tempStream.getVideoTracks()[0];
+//                    const tempCapabilities = tempVideoTrack.getCapabilities();
+                    tempCapabilities = {}
+                    const tempSettings = tempVideoTrack.getSettings();
+                    const tempsConstraints = tempVideoTrack.getConstraints();
+                    //const tempsCaptureHandle = tempVideoTrack.getCaptureHandle();
+
+
+
+                    const li = document.createElement('li');
+                    let capabilitiesHTML = `
+                        <strong>camera Label:</strong> ${camera.label || 'No Label'}<br>
+                        <strong>VideoTrackSettings aspectRatio:</strong> ${tempSettings.aspectRatio}<br>
+                        <strong>VideoTrackSettings deviceId:</strong> ${tempSettings.deviceId}<br>
+                        <strong>VideoTrackSettings frameRate:</strong> ${tempSettings.frameRate}<br>
+                        <strong>VideoTrackSettings groupId:</strong> ${tempSettings.groupId}<br>
+                        <strong>VideoTrackSettings height:</strong> ${tempSettings.height}<br>
+                        <strong>VideoTrackSettings width:</strong> ${tempSettings.width}<br>
+                        <strong>VideoTrackSettings resizeMode:</strong> ${tempSettings.resizeMode}<br>                                                                                                                                                                   
+                        
+                        
+
+                        <ul>
+                    `;
+
+
+
+                    for (const [key, value] of Object.entries(tempVideoTrack)) {
+                        capabilitiesHTML += `<li><strong>${key}:</strong> ${JSON.stringify(value)}</li>`;
+                    }
+                    for (const [key, value] of Object.entries(tempCapabilities)) {
+                        capabilitiesHTML += `<li><strong>${key}:</strong> ${JSON.stringify(value)}</li>`;
+                    }
+
+                    capabilitiesHTML += `</ul>`;
+                    capabilitiesHTML += `<button onclick="showCamera('${camera.deviceId}')">Show Video</button>`;
+
+                    li.innerHTML = capabilitiesHTML;
+                    cameraList.appendChild(li);
+
+                    // Stop the temporary stream
+                    tempVideoTrack.stop();
+                }
+
+                // Stop the initial stream
+                stream.getTracks().forEach(track => track.stop());
+
+                if (videoDevices.length === 0) {
+                    cameraList.innerHTML = '<li>No cameras found</li>';
+                }
+            } catch (error) {
+                console.error('Error accessing camera devices:', error);
+                alert('Error accessing camera devices. Check console for details.');
+            }
+        }
+
+        async function showCamera(deviceId) {
+            try {
+                const constraints = { video: { deviceId: { exact: deviceId }, width: 1920, height: 1080 }, frameRate: { ideal: 3, max: 3 } };
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                const videoElement = document.getElementById('cameraVideo');
+                videoElement.srcObject = stream;
+
+                // Show the capture button when a camera is displayed
+                document.getElementById('captureImageBtn').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error showing camera video:', error);
+                alert('Error showing camera video. Check console for details.');
+            }
+        }
+
+        // Function to capture the image when the button is clicked
+        function captureImage() {
+            const videoElement = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+
+            // Set the canvas size to match the video element
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+
+            // Draw the current frame from the video onto the canvas
+            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas to a data URL (base64 encoded image)
+            const dataURL = canvas.toDataURL('image/png');
+
+            // Trigger the download of the image
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'captured_image.png';
+            link.click();
+        }
+getCameraInfo();
+        // Attach the click event to the capture button after the page loads
+        document.getElementById('captureImageBtn').addEventListener('click', captureImage);
+
+                document.getElementById('getCodecs').addEventListener('click', async () => {
+            try {
+                // Get a media stream
+                const videoElement = document.getElementById('cameraVideo');
+                const stream = videoElement.srcObject;
+
+                // Create a peer connection
+                const pc = new RTCPeerConnection();
+
+                // Add tracks to the peer connection
+                stream.getTracks().forEach(track => pc.addTrack(track, stream));
+
+                // Get audio and video codecs
+                const audioCapabilities = RTCRtpSender.getCapabilities('audio');
+                const videoCapabilities = RTCRtpSender.getCapabilities('video');
+
+                // Display the codecs
+                document.getElementById('codecList').textContent = JSON.stringify({
+                    audio: audioCapabilities.codecs,
+                    video: videoCapabilities.codecs
+                }, null, 2);
+
+                // Clean up
+                stream.getTracks().forEach(track => track.stop());
+                pc.close();
+            } catch (err) {
+                console.error('Error accessing media devices.', err);
+                document.getElementById('codecList').textContent = 'Error accessing media devices: ' + err.message;
+            }
+        });
+        
+        
+        
+    </script>
+
+</body>
+</html>
