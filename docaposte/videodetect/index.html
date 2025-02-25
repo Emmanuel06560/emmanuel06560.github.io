@@ -49,7 +49,7 @@
 
 
 
-
+                stream.getTracks().forEach(track => track.stop());
 
                 for (const camera of videoDevices) {
 //                    const constraints = { video: { deviceId: camera.deviceId, width: 5000, height: 1000 } };
